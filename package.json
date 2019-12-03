@@ -1,0 +1,21 @@
+{
+  "name": "@inventsable/logman",
+  "version": "1.0.0",
+  "description": "Simple CLI tool for changelog creation",
+  "main": "./bin/index.js",
+  "bin": {
+    "log": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "Inventsable/logman",
+  "keywords": [],
+  "author": "Tom Scharstein II <tom@inventsable.cc>",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.8.1",
+    "inquirer": "^7.0.0"
+  },
+  "devDependencies": {}
+}
