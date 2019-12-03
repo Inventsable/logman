@@ -1,32 +1,39 @@
 #!/usr/bin/env node
-
+let message = process.argv;
 const fs = require("fs");
 const path = require("path");
 const format = require("date-fns/format");
+const chalk = require("chalk");
 const inquirer = require("inquirer");
 
 async function init() {
   const now = getTime();
   const today = getDate();
   const check = await ensureHasLogger();
-
+  let printResults = false,
+    printData;
   let res = await checkHasToday(today);
   res = res
     ? fs.readFileSync(`./.logger/${today}.md`, { encoding: "utf-8" })
     : ``;
   res = sanitizeRes(res);
-  let answer = await inquirer.prompt([
-    {
-      type: "input",
-      name: "change",
-      message: `${today} > [${now}]:`
-    }
-  ]);
-  let text = ` **[${now}]** ${
-    /^[a-z]/.test(answer.change)
-      ? answer.change.charAt(0).toUpperCase() + answer.change.slice(1)
-      : answer.change
-  }\r\n`;
+  let answer = {};
+  if (message.length > 2) {
+    printResults = true;
+    answer["change"] = message.splice(2, message.length).join(" ");
+    printData = `${chalk.black.bgBlue(` ✓ ${now} `)} ${sanitizeString(
+      answer.change
+    )}`;
+  } else {
+    answer = await inquirer.prompt([
+      {
+        type: "input",
+        name: "change",
+        message: `${today} > [${now}]:`
+      }
+    ]);
+  }
+  let text = ` **[${now}]** ${sanitizeString(answer.change)}\r\n`;
   res.unshift(text);
   let file = `### ${today}
 
@@ -37,6 +44,15 @@ ${res
   .join("")}`;
   fs.writeFileSync(`./.logger/${today}.md`, file);
   writeAll();
+  if (printResults) {
+    console.log("");
+    console.log(printData);
+    console.log("");
+  }
+}
+
+function sanitizeString(str) {
+  return /^[a-z]/.test(str) ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 }
 
 function sanitizeRes(res) {
@@ -83,7 +99,7 @@ async function writeAll() {
 }
 
 function getTime() {
-  return format(new Date(), "hh:mma");
+  return format(new Date(), "hh:mm a");
 }
 function getDate() {
   return format(new Date(), "MM.dd.yy");
