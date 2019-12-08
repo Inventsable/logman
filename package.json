@@ -1,6 +1,6 @@
 {
   "name": "@inventsable/logman",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Simple CLI tool for changelog creation",
   "main": "./bin/index.js",
   "bin": {
