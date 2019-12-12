@@ -10,6 +10,7 @@ async function init() {
   const now = getTime();
   const today = getDate();
   const check = await ensureHasLogger();
+  const versioncheck = await getVersion();
   let printResults = false,
     printData;
   let res = await checkHasToday(today);
@@ -33,7 +34,9 @@ async function init() {
       }
     ]);
   }
-  let text = ` **[${now}]** ${sanitizeString(answer.change)}\r\n`;
+  let text = ` **[${now}]**${
+    versioncheck.length ? ` _v${versioncheck}_ -` : ""
+  } ${sanitizeString(answer.change)}\r\n`;
   res.unshift(text);
   let file = `### ${today}
 
@@ -53,6 +56,13 @@ ${res
 
 function sanitizeString(str) {
   return /^[a-z]/.test(str) ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+}
+
+async function getVersion() {
+  let thisRepo = await readDir(path.resolve("./"));
+  if (!thisRepo.includes("package.json")) return "";
+  let data = JSON.parse(fs.readFileSync(`./package.json`, "utf8"));
+  return data.version ? data.version : "";
 }
 
 function sanitizeRes(res) {

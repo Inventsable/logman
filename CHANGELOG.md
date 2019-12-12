@@ -1,7 +1,10 @@
-### 12.07.19
+### 12.11.19
 
-- **[08:25 PM]** Testing123
-### 12.05.19
+- **[08:26 PM]** _v1.1.0_ - Updating to include version in log
+- **[08:25 PM]** _v1.0.3_ - Checking version### 12.07.19
+
+- **[08:28PM]** Shit
+- **[08:25 PM]** Testing123### 12.05.19
 
 - **[07:14 PM]** Testing one liners
 ### 12.02.19
