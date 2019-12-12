@@ -1,10 +1,10 @@
 {
   "name": "@inventsable/logman",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple CLI tool for changelog creation",
   "main": "./bin/index.js",
   "bin": {
-    "log": "node ./bin/index.js"
+    "log": "./bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
